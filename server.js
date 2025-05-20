@@ -20,10 +20,8 @@ io.on("connection", (socket) => {
 
     socket.on("new message", (data) => {
         const { room, username, message } = data;
-        io.to(room).emit(room, { username, message });
+        io.to(room).emit("message", { username, message, room }); // for consistent event name
     });
-
-
 
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);
