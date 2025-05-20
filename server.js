@@ -13,9 +13,6 @@ io.on("connection", (socket) => {
 
     socket.on("join", ({ username, room }) => {
         socket.join(room);
-
-        // optionally broadcast something like:
-        socket.to(room).emit("message", { username, message: `${username} joined the room` });
     });
 
     socket.on("new message", (data) => {
