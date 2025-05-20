@@ -13,7 +13,9 @@ io.on("connection", (socket) => {
 
     socket.on("join", ({ username, room }) => {
         socket.join(room);
-        console.log(`${username} joined room ${room}`);
+
+        // optionally broadcast something like:
+        socket.to(room).emit("message", { username, message: `${username} joined the room` });
     });
 
     socket.on("message", (msg) => {
@@ -25,6 +27,8 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);
     });
+
+    
 });
 
 console.log(`Socket.IO server running on port ${PORT}`);
