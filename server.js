@@ -18,11 +18,12 @@ io.on("connection", (socket) => {
         socket.to(room).emit("message", { username, message: `${username} joined the room` });
     });
 
-    socket.on("message", (msg) => {
-        const { room } = msg;
-        console.log(`Message to room ${room}:`, msg);
-        io.to(room).emit("message", msg);
+    socket.on("new message", (data) => {
+        const { room, username, message } = data;
+        io.to(room).emit(room, { username, message });
     });
+
+
 
     socket.on("disconnect", () => {
         console.log("Client disconnected:", socket.id);
